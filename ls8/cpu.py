@@ -7,6 +7,12 @@
 
 import sys
 
+# found these in the program = []
+HLT = 0b00000001  # Step 4 Add the HLT instruction definition
+# Step 5 Add the LDI instruction See the LS-8 spec for the details of what this instructions does and its opcode value.
+LDI = 0b10000010
+PRN = 0b01000111  # Step 6 Add the PRN instruction
+
 
 class CPU:
     """Main CPU class."""
@@ -87,4 +93,8 @@ class CPU:
 
     def run(self):
         """Run the CPU."""
+        # needs to read the memory address that's stored in register PC,
+        # and store that result in IR, the Instruction Register. This can
+        # just be a local variable in run().
+        IR =
         pass
