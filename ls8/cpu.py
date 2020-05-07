@@ -8,10 +8,10 @@
 import sys
 
 # found these in the program = []
-HLT = 0b00000001  # Step 4 Add the HLT instruction definition
-# Step 5 Add the LDI instruction See the LS-8 spec for the details of what this instructions does and its opcode value.
+HLT = 0b00000001  # 1 Step 4 Add the HLT instruction definition
+# 130 Step 5 Add the LDI instruction See the LS-8 spec for the details of what this instructions does and its opcode value.
 LDI = 0b10000010
-PRN = 0b01000111  # Step 6 Add the PRN instruction
+PRN = 0b01000111  # 73 Step 6 Add the PRN instruction
 
 
 class CPU:
@@ -33,13 +33,13 @@ class CPU:
     def ram_read(self, MAR):
         # Step 2 should accept the address to read and return the value stored there.
         # The MAR contains the address that is being read or written to
-        self.Mar = MAR
+        self.ram[Mar]
         return MAR
 
     def ram_write(self, MDR):
         # Step 2 should accept a value to write, and the address to write it to.
         # The MDR contains the data that was read or the data to write.
-        self.MDR = MDR
+        self.ram[MDR] = MDR
 
     def load(self):
         """Load a program into memory."""
