@@ -13,12 +13,27 @@ class CPU:
 
     def __init__(self):
         """Construct a new CPU."""
-        # step 1 add list properties to the CPU class to hold 256 bytes of memory
+        # Step 1 add list properties to the CPU class to hold 256 bytes of memory
         # and 8 general-purpose registers. Also add properties for any internal
         # registers you need, e.g. PC
         self.ram = [0] * 256
         self.register = [0] * 8
         self.pc = 0
+
+        # Step 2
+        # You don't need to add the MAR or MDR to your CPU class,
+        # but they would make handy parameter names for ram_read()
+        # and ram_write(), if you wanted.
+    def ram_read(self, MAR):
+        # Step 2 should accept the address to read and return the value stored there.
+        # The MAR contains the address that is being read or written to
+        self.Mar = MAR
+        return MAR
+
+    def ram_write(self, MDR):
+        # Step 2 should accept a value to write, and the address to write it to.
+        # The MDR contains the data that was read or the data to write.
+        self.MDR = MDR
 
     def load(self):
         """Load a program into memory."""
