@@ -13,7 +13,12 @@ class CPU:
 
     def __init__(self):
         """Construct a new CPU."""
-        pass
+        # step 1 add list properties to the CPU class to hold 256 bytes of memory
+        # and 8 general-purpose registers. Also add properties for any internal
+        # registers you need, e.g. PC
+        self.ram = [0] * 256
+        self.register = [0] * 8
+        self.pc = 0
 
     def load(self):
         """Load a program into memory."""
