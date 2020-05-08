@@ -30,16 +30,15 @@ class CPU:
         # You don't need to add the MAR or MDR to your CPU class,
         # but they would make handy parameter names for ram_read()
         # and ram_write(), if you wanted.
-    def ram_read(self, MAR):
+    def ram_read(self, mar):
         # Step 2 should accept the address to read and return the value stored there.
         # The MAR contains the address that is being read or written to
-        self.ram[Mar]
-        return MAR
+        return self.ram[mar]
 
-    def ram_write(self, MDR):
+    def ram_write(self, mdr):
         # Step 2 should accept a value to write, and the address to write it to.
         # The MDR contains the data that was read or the data to write.
-        self.ram[MDR] = MDR
+        self.ram[mdr] = mdr
 
     def load(self):
         """Load a program into memory."""
