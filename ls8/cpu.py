@@ -35,10 +35,10 @@ class CPU:
         # The MAR contains the address that is being read or written to
         return self.ram[mar]
 
-    def ram_write(self, mdr):
+    def ram_write(self, mdr, mar):
         # Step 2 should accept a value to write, and the address to write it to.
         # The MDR contains the data that was read or the data to write.
-        self.ram[mdr] = mdr
+        self.ram[mar] = mdr
 
     def load(self):
         """Load a program into memory."""
@@ -95,5 +95,5 @@ class CPU:
         # needs to read the memory address that's stored in register PC,
         # and store that result in IR, the Instruction Register. This can
         # just be a local variable in run().
-        IR =
+        ir = self.ram[self.pc]
         pass
