@@ -23,7 +23,7 @@ class CPU:
         # and 8 general-purpose registers. Also add properties for any internal
         # registers you need, e.g. PC
         self.ram = [0] * 256
-        self.register = [0] * 8
+        self.reg = [0] * 8
         self.pc = 0
 
         # Step 2
@@ -95,5 +95,30 @@ class CPU:
         # needs to read the memory address that's stored in register PC,
         # and store that result in IR, the Instruction Register. This can
         # just be a local variable in run().
-        ir = self.ram[self.pc]
-        pass
+
+        running = True
+
+        while running:
+            ir = self.ram_read(self.pc)  # similiar to command = memory[pc]
+            # Using ram_read(), read the bytes at PC+1 and PC+2 from RAM into
+            # variables operand_a and operand_b in case the instruction needs them.
+            operand_a = self.ram_read(self.pc + 1)
+            operand_b = self.ram_read(self.pc + 2)
+
+            if ir == LDI:
+                self.reg[operand_a] = [operand_b]
+                self.pc += 3
+
+            elif ir == PRN:
+                print(self.reg[operand_a])
+                self.pc += 2
+
+            elif ir == HLT:
+                running = False
+                self.pc += 1
+
+            else:
+                # if command is non recognizable
+                print("Unknown instruction")
+                sys.exit(1)
+                # lets crash :(
