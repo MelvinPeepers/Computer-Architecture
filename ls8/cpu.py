@@ -50,9 +50,9 @@ class CPU:
         # reset the memory
         address = 0
         # get the filename from arguments
-        print('starting step 7')
-        print(sys.argv[0])
-        print(sys.argv[1])
+        #print('starting step 7')
+        # print(sys.argv[0])
+        # print(sys.argv[1])
 
         if len(sys.argv) != 2:
             print("Need proper file name passed")
@@ -63,7 +63,7 @@ class CPU:
             for line in f:
                 line = line.split('#')
                 line = line[0].strip()
-                print(line)
+                # print(line)
                 if line == "":
                     continue
 
@@ -133,14 +133,14 @@ class CPU:
         running = True
 
         while running:
-            ir = self.ram_read(self.pc)  # similiar to command = memory[pc]
+            ir = self.ram[self.pc]  # similiar to command = memory[pc]
             # Using ram_read(), read the bytes at PC+1 and PC+2 from RAM into
             # variables operand_a and operand_b in case the instruction needs them.
             operand_a = self.ram_read(self.pc + 1)
             operand_b = self.ram_read(self.pc + 2)
 
             if ir == LDI:
-                self.reg[operand_a] = [operand_b]
+                self.reg[operand_a] = operand_b
                 self.pc += 3
 
             elif ir == PRN:
