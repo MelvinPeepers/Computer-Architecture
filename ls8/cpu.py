@@ -18,6 +18,11 @@ SUB = 0b10100001
 MUL = 0b10100010
 DIV = 0b10100011
 
+POP = 0b01000110
+PUSH = 0b01000101
+SP = 7  # register location that holds top of stack address
+# store the top of memory into Register 7
+
 
 class CPU:
     """Main CPU class."""
@@ -154,6 +159,23 @@ class CPU:
             elif ir == MUL:
                 self.alu('MUL', operand_a, operand_b)
                 self.pc += 3
+
+            elif ir == PUSH:
+                reg = operand_a
+                self.reg[SP] -= 1  # decrement the Stack Pointer (SP)
+                # read the next value for register location
+                reg_value = self.reg[reg]
+                # take the value in that register and add to stack
+                self.ram[self.reg[SP]] = reg_value
+                self.pc += 2
+
+            elif ir == POP:
+                # POP value of stack at location SP
+                value = self.ram[self.reg[SP]]
+                reg = operand_a
+                self.reg[reg] = value
+                self.reg[SP] += 1  # increment the Stack Pointer (SP)
+                self.pc += 2
 
             else:
                 # if command is non recognizable
