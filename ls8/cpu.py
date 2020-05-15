@@ -1,25 +1,23 @@
 """CPU functionality."""
-
-#
 # LambdaSchool-8 computer
-#
-
 
 import sys
 
 # found these in the program = []
-HLT = 0b00000001  # 1 Step 4 Add the HLT instruction definition
+HLT = 0b00000001  # 1 - Step 4 Add the HLT instruction definition
 # 130 Step 5 Add the LDI instruction See the LS-8 spec for the details of what this instructions does and its opcode value.
-LDI = 0b10000010
-PRN = 0b01000111  # 73 Step 6 Add the PRN instruction
+LDI = 0b10000010  # 130
+PRN = 0b01000111  # 71 - Step 6 Add the PRN instruction
 
-ADD = 0b10101000
-SUB = 0b10100001
-MUL = 0b10100010
-DIV = 0b10100011
+ADD = 0b10100000  # 160
+SUB = 0b10100001  # 161
+MUL = 0b10100010  # 162
+DIV = 0b10100011  # 163
 
-POP = 0b01000110
-PUSH = 0b01000101
+POP = 0b01000110  # 70
+PUSH = 0b01000101  # 69
+CALL = 0b01010000  # 80
+RET = 0b00010001  # 17
 SP = 7  # register location that holds top of stack address
 # store the top of memory into Register 7
 
@@ -32,9 +30,10 @@ class CPU:
         # Step 1 add list properties to the CPU class to hold 256 bytes of memory
         # and 8 general-purpose registers. Also add properties for any internal
         # registers you need, e.g. PC
-        self.ram = [0] * 256
-        self.reg = [0] * 8
+        self.ram = [0] * 256  # memory
+        self.reg = [0] * 8  # register
         self.pc = 0
+        #self.reg[SP] = len(self.ram) - 1
 
         # Step 2
         # You don't need to add the MAR or MDR to your CPU class,
@@ -55,9 +54,9 @@ class CPU:
         # reset the memory
         address = 0
         # get the filename from arguments
-        #print('starting step 7')
-        # print(sys.argv[0])
-        # print(sys.argv[1])
+        # print('starting step 7')
+        print(sys.argv[0])
+        print(sys.argv[1])
 
         if len(sys.argv) != 2:
             print("Need proper file name passed")
@@ -156,6 +155,10 @@ class CPU:
                 running = False
                 self.pc += 1
 
+            elif ir == ADD:
+                self.alu('ADD', operand_a, operand_b)
+                self.pc += 3
+
             elif ir == MUL:
                 self.alu('MUL', operand_a, operand_b)
                 self.pc += 3
@@ -177,8 +180,28 @@ class CPU:
                 self.reg[SP] += 1  # increment the Stack Pointer (SP)
                 self.pc += 2
 
+            elif ir == CALL:
+                # store the next line to execute onto the stack
+                # this will be the line we will return to after our subroutine
+                self.reg[SP] -= 1
+                self.ram[self.reg[SP]] = self.pc + 2
+                # read which register stores our next line passed with CALL
+                reg = operand_a
+                # set the PC to that value
+                self.pc = self.reg[reg]
+
+            elif ir == RET:
+                # pop the current value off stack
+                # this SHOULD be the return address
+                return_address = self.ram[self.reg[SP]]
+                # Increment the stack pointer (move back up the stack)
+                self.reg[SP] += 1
+                # set the PC to that value
+                self.pc = return_address
+
             else:
                 # if command is non recognizable
+                print(ir)
                 print("Unknown instruction")
                 sys.exit(1)
                 # lets crash :(
